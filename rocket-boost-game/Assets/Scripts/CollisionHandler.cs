@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -19,7 +18,12 @@ public class CollisionHandler : MonoBehaviour
         break;
       default:
         Debug.Log("Explode");
+        ReloadLevel();
         break;
     }
+  }
+  void ReloadLevel()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 }
