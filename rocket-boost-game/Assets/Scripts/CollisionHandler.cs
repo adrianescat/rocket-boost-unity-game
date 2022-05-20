@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
 
-  [SerializeField] float delay = 1f;
+  [SerializeField] float delay = 3f;
 
   [SerializeField] AudioClip crashSound;
   [SerializeField] AudioClip successSound;
 
   AudioSource audioSource;
+
+  bool isTransitioning = false;
 
   void Start()
   {
@@ -17,6 +19,8 @@ public class CollisionHandler : MonoBehaviour
   }
   void OnCollisionEnter(Collision other)
   {
+    if (isTransitioning) return;
+
     switch (other.gameObject.tag)
     {
       case "Fuel":
@@ -35,6 +39,7 @@ public class CollisionHandler : MonoBehaviour
   }
   void StartCrashSequence()
   {
+    isTransitioning = true;
     audioSource.PlayOneShot(crashSound);
     // Add particle effect
     GetComponent<Movement>().enabled = false; // remove control
@@ -42,6 +47,7 @@ public class CollisionHandler : MonoBehaviour
   }
   void StartSuccessSequence()
   {
+    isTransitioning = true;
     audioSource.PlayOneShot(successSound);
     // Add particle effect
     GetComponent<Movement>().enabled = false; // remove control

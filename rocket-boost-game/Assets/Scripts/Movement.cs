@@ -9,14 +9,14 @@ public class Movement : MonoBehaviour
   [SerializeField] AudioClip mainEngineSound;
   Rigidbody rb;
   AudioSource audioSource;
-  // Start is called before the first frame update
+
   void Start()
   {
     rb = GetComponent<Rigidbody>();
     audioSource = GetComponent<AudioSource>();
   }
 
-  // Update is called once per frame
+
   void Update()
   {
     ProcessThrust();
