@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+
+  [SerializeField] float delay = 1f;
   void OnCollisionEnter(Collision other)
   {
     switch (other.gameObject.tag)
@@ -14,15 +16,28 @@ public class CollisionHandler : MonoBehaviour
         Debug.Log("Launch Pad");
         break;
       case "Finish":
-        Debug.Log("Finish Line");
-        GoToNextLevel();
+        StartSuccessSequence();
         break;
       default:
-        Debug.Log("Explode");
-        ReloadLevel();
+        StartCrashSequence();
         break;
     }
   }
+  void StartCrashSequence()
+  {
+    // Add sound effect
+    // Add particle effect
+    GetComponent<Movement>().enabled = false; // remove control
+    Invoke("ReloadLevel", delay);
+  }
+  void StartSuccessSequence()
+  {
+    // Add sound effect
+    // Add particle effect
+    GetComponent<Movement>().enabled = false; // remove control
+    Invoke("GoToNextLevel", delay);
+  }
+
   void ReloadLevel()
   {
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
