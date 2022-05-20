@@ -5,6 +5,16 @@ public class CollisionHandler : MonoBehaviour
 {
 
   [SerializeField] float delay = 1f;
+
+  [SerializeField] AudioClip crashSound;
+  [SerializeField] AudioClip successSound;
+
+  AudioSource audioSource;
+
+  void Start()
+  {
+    audioSource = GetComponent<AudioSource>();
+  }
   void OnCollisionEnter(Collision other)
   {
     switch (other.gameObject.tag)
@@ -25,14 +35,14 @@ public class CollisionHandler : MonoBehaviour
   }
   void StartCrashSequence()
   {
-    // Add sound effect
+    audioSource.PlayOneShot(crashSound);
     // Add particle effect
     GetComponent<Movement>().enabled = false; // remove control
     Invoke("ReloadLevel", delay);
   }
   void StartSuccessSequence()
   {
-    // Add sound effect
+    audioSource.PlayOneShot(successSound);
     // Add particle effect
     GetComponent<Movement>().enabled = false; // remove control
     Invoke("GoToNextLevel", delay);
